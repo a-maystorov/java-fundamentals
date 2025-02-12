@@ -1,5 +1,5 @@
 public class Main {
     public static void main(String[] args) {
-        MortgageCalculator.calculate();
+        MortgageCalculator.main(args);
     }
 }
