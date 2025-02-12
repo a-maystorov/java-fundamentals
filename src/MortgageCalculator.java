@@ -3,50 +3,30 @@ import java.util.Scanner;
 
 // TODO: Refactor this into a proper OO class
 public class MortgageCalculator {
-
     public static void main(String[] args) {
-        int principal = 0;
-        float annualInterestRate = 0;
-        byte periodInYears = 0;
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Principal ($1K - $1M): ");
-            principal = scanner.nextInt();
-
-            if (principal < 1_000 || principal > 1_000_000) {
-                System.out.println("Enter a number between 1,000 amd 1,000,000");
-                continue;
-            }
-            break;
-        }
-
-        while (true) {
-            System.out.print("Annual Interest Rate: ");
-            annualInterestRate = scanner.nextFloat();
-
-            if (annualInterestRate <= 0 || annualInterestRate > 30) {
-                System.out.println("Enter a number greater than 0 and less than or equal to 30");
-                continue;
-            }
-            break;
-        }
-
-        while (true) {
-            System.out.print("Period (Years): ");
-            periodInYears = scanner.nextByte();
-
-            if (periodInYears < 1 || periodInYears > 30) {
-                System.out.println("Enter a number between 1 and 30");
-                continue;
-            }
-            break;
-        }
+        int principal = (int) readNumber("Principal ($1K - $1M): ", 1000, 1_000_000);
+        float annualInterestRate = (float) readNumber("Annual Interest Rate: ", 0, 30);
+        byte periodInYears = (byte) readNumber("Period (Years): ", 1, 30);
 
         final double mortgage = calculate(principal, annualInterestRate, periodInYears);
-        String formattedResult = NumberFormat.getCurrencyInstance().format(mortgage);
-        System.out.println("Mortgage: " + formattedResult);
+        String formattedMortgage = NumberFormat.getCurrencyInstance().format(mortgage);
+        System.out.println("Mortgage: " + formattedMortgage);
+    }
+
+    public static double readNumber(String prompt, double min, double max) {
+        Scanner scanner = new Scanner(System.in);
+        double value;
+
+        while (true) {
+            System.out.print(prompt);
+            value = scanner.nextFloat();
+
+            if (value >= min && value <= max) {
+                break;
+            }
+            System.out.println("Enter a number between " + (int) min + " and " + (int) max);
+        }
+        return value;
     }
 
     public static double calculate(int principal, float annualInterestRate, byte periodInYears) {
