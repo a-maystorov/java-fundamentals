@@ -1,8 +1,4 @@
-# Default ignored files
-/shelf/
-
 # IntelliJ IDEA
-.idea/
 !.idea/misc.xml
 !.idea/modules.xml
 *.iml
