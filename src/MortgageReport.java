@@ -4,14 +4,16 @@ public class MortgageReport {
     private static final NumberFormat CURRENCY_FORMATTER = NumberFormat.getCurrencyInstance();
 
     public static void printMortgage(int principal, float annualInterest, byte years) {
-        double mortgage = MortgageCalculator.calculateMortgage(principal, annualInterest, years);
+        var calculator = new MortgageCalculator(principal, annualInterest, years);
+        double mortgage = calculator.calculateMortgage();
         printSection("MORTGAGE", "Monthly Payments: " + formatCurrency(mortgage));
     }
 
     public static void printPaymentSchedule(int principal, float annualInterest, byte years) {
         printSection("PAYMENT SCHEDULE");
+        var calculator = new MortgageCalculator(principal, annualInterest, years);
         for (short month = 1; month <= years * MortgageCalculator.MONTHS_IN_YEAR; month++) {
-            double balance = MortgageCalculator.calculateBalance(principal, annualInterest, years, month);
+            double balance = calculator.calculateBalance(month);
             System.out.println(formatCurrency(balance));
         }
     }

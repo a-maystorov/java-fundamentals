@@ -1,22 +1,17 @@
 public class MortgageCalculator {
+    private final int principal;
+    private final float annualInterest;
+    private final byte years;
     final static byte MONTHS_IN_YEAR = 12;
     final static byte PERCENT = 100;
 
-    public static void main(String[] args) {
-        int principal = (int) InputReader.readNumber("Principal: ", 1000, 1_000_000);
-        float annualInterest = (float) InputReader.readNumber("Annual Interest Rate: ", 1, 30);
-        byte years = (byte) InputReader.readNumber("Period (Years): ", 1, 30);
-
-        MortgageReport.printMortgage(principal, annualInterest, years);
-        MortgageReport.printPaymentSchedule(principal, annualInterest, years);
+    public MortgageCalculator(int principal, float annualInterest, byte years) {
+        this.principal = principal;
+        this.annualInterest = annualInterest;
+        this.years = years;
     }
 
-    public static double calculateBalance(
-            int principal,
-            float annualInterest,
-            byte years,
-            short numberOfPaymentsMade
-    ) {
+    public double calculateBalance(short numberOfPaymentsMade) {
         float monthlyInterest = annualInterest / PERCENT / MONTHS_IN_YEAR;
         float numberOfPayments = years * MONTHS_IN_YEAR;
 
@@ -25,10 +20,7 @@ public class MortgageCalculator {
                 / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1);
     }
 
-    public static double calculateMortgage(
-            int principal,
-            float annualInterest,
-            byte years) {
+    public double calculateMortgage() {
 
         float monthlyInterest = annualInterest / PERCENT / MONTHS_IN_YEAR;
         float numberOfPayments = years * MONTHS_IN_YEAR;
