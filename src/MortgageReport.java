@@ -2,17 +2,20 @@ import java.text.NumberFormat;
 
 public class MortgageReport {
     private static final NumberFormat CURRENCY_FORMATTER = NumberFormat.getCurrencyInstance();
+    private final MortgageCalculator calculator;
 
-    public static void printMortgage(int principal, float annualInterest, byte years) {
-        var calculator = new MortgageCalculator(principal, annualInterest, years);
+    public MortgageReport(MortgageCalculator calculator) {
+        this.calculator = calculator;
+    }
+
+    public void printMortgage() {
         double mortgage = calculator.calculateMortgage();
         printSection("MORTGAGE", "Monthly Payments: " + formatCurrency(mortgage));
     }
 
-    public static void printPaymentSchedule(int principal, float annualInterest, byte years) {
+    public void printPaymentSchedule() {
         printSection("PAYMENT SCHEDULE");
-        var calculator = new MortgageCalculator(principal, annualInterest, years);
-        for (short month = 1; month <= years * MortgageCalculator.MONTHS_IN_YEAR; month++) {
+        for (short month = 1; month <= calculator.getYears() * MortgageCalculator.MONTHS_IN_YEAR; month++) {
             double balance = calculator.calculateBalance(month);
             System.out.println(formatCurrency(balance));
         }
