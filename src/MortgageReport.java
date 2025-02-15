@@ -5,9 +5,11 @@ public class MortgageReport {
     private final MortgageCalculator calculator;
 
     public MortgageReport(MortgageCalculator calculator) {
+        if (calculator == null)
+            throw new IllegalArgumentException("Calculator cannot be null");
         this.calculator = calculator;
     }
-
+    
     public void printMortgage() {
         double mortgage = calculator.calculateMortgage();
         printSection("MORTGAGE", "Monthly Payments: " + formatCurrency(mortgage));
